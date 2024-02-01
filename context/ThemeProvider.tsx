@@ -20,9 +20,9 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    handleThemeChange();
-  }, [mode]);
+  // useEffect(() => {
+  //   handleThemeChange();
+  // }, [mode]);
 
   return (
     <ThemeContext.Provider value={{ mode, setMode }}>
@@ -39,4 +39,6 @@ export function useTheme() {
   if (context === undefined) {
     throw new Error("useTheme must be used within a ThemeProvider");
   }
+
+  return context;
 }
