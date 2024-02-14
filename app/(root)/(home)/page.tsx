@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import LocalSearch from "@/components/shared/search/LocalSearch";
+import Filter from "@/components/shared/search/Filter";
+import { HomePageFilters } from "@/constants/filters";
 
 const Home = () => {
   return (
@@ -17,9 +19,14 @@ const Home = () => {
         <LocalSearch
           route="/"
           iconPosition="left"
-          imgSrc="/aassets/icons/search.svg"
+          imgSrc="/assets/icons/search.svg"
           placeholder="Search for questions"
           otherClasses="flex-1"
+        />
+        <Filter
+          filters={HomePageFilters}
+          otherClasses="min-h-[56px] sm:min-w-[170px]"
+          containerClasses="hidden max-md:flex"
         />
       </div>
     </>
