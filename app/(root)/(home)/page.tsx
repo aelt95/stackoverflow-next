@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import LocalSearch from "@/components/shared/search/LocalSearch";
 import Filter from "@/components/shared/search/Filter";
 import { HomePageFilters } from "@/constants/filters";
+import HomeFilters from "@/components/home/HomeFilters";
 
 const Home = () => {
   return (
@@ -29,6 +30,7 @@ const Home = () => {
           containerClasses="hidden max-md:flex"
         />
       </div>
+      <HomeFilters />
     </>
   );
 };
