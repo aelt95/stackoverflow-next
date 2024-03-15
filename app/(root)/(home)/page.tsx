@@ -4,6 +4,31 @@ import LocalSearch from "@/components/shared/search/LocalSearch";
 import Filter from "@/components/shared/search/Filter";
 import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/home/HomeFilters";
+import NoResult from "@/components/shared/NoResult";
+import QuestionCard from "@/components/shared/cards/QuestionCard";
+
+const questions = [
+  {
+    _id: 1,
+    title: "How to use npm run build?",
+    tags: [{ _id: 1, name: "npm" }],
+    author: "Mickel Rey",
+    upvotes: 10,
+    views: 1000,
+    answers: 2,
+    createdAt: "2024-03-15",
+  },
+  {
+    _id: 2,
+    title: "How install threeJs",
+    tags: [{ _id: 1, name: "three" }],
+    author: "Rose Clarie",
+    upvotes: 10,
+    views: 1000,
+    answers: 2,
+    createdAt: "2024-03-15",
+  },
+];
 
 const Home = () => {
   return (
@@ -31,6 +56,22 @@ const Home = () => {
         />
       </div>
       <HomeFilters />
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {questions.length > 0 ? (
+          questions.map((items) => {
+            return <QuestionCard key={items._id} {...items} />;
+          })
+        ) : (
+          <NoResult
+            title={"There's no question to show"}
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
+            discussion. our query could be the next big thing others learn from. Get
+            involved! 💡"
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        )}
+      </div>
     </>
   );
 };
