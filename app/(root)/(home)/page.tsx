@@ -16,17 +16,17 @@ const questions = [
     upvotes: 10,
     views: 1000,
     answers: 2,
-    createdAt: "2024-03-15",
+    createdAt: new Date("2024-03-15"),
   },
   {
     _id: 2,
     title: "How install threeJs",
     tags: [{ _id: 1, name: "three" }],
     author: "Rose Clarie",
-    upvotes: 10,
-    views: 1000,
-    answers: 2,
-    createdAt: "2024-03-15",
+    upvotes: 21,
+    views: 2321,
+    answers: 12,
+    createdAt: new Date("2024-03-16, 16:22"),
   },
 ];
 
