@@ -1,5 +1,6 @@
 "use client";
-
+import { useRef } from "react";
+import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,6 +30,14 @@ const Question = () => {
   function onSubmit(values: z.infer<typeof QuestionSchema>) {
     console.log(values);
   }
+  const editorRef = useRef(null);
+  const log = () => {
+    if (editorRef.current) {
+      //@ts-ignore
+      console.log(editorRef.current.getContent());
+    }
+  };
+
   return (
     <Form {...form}>
       <form
@@ -67,7 +76,43 @@ const Question = () => {
                 Detail explanation of your problem&nbsp;
                 <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl>{/* add an editor later */}</FormControl>
+              <FormControl>
+                <Editor
+                  apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+                  onInit={(evt, editor) => {
+                    //@ts-ignore
+                    editorRef.current = editor;
+                  }}
+                  initialValue=""
+                  init={{
+                    height: 350,
+                    menubar: false,
+                    plugins: [
+                      "advlist",
+                      "autolink",
+                      "lists",
+                      "link",
+                      "image",
+                      "charmap",
+                      "preview",
+                      "anchor",
+                      "searchreplace",
+                      "visualblocks",
+                      "codesample",
+                      "fullscreen",
+                      "insertdatetime",
+                      "media",
+                      "table",
+                    ],
+                    toolbar:
+                      "undo redo | blocks | " +
+                      "codesample | bold italic forecolor | alignleft aligncenter " +
+                      "alignright alignjustify | bullist numlist outdent indent | ",
+                    content_style:
+                      "body { font-family:Inter,Arial,sans-serif; font-size:16px }",
+                  }}
+                />
+              </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Introduce your problem and expand on what you put in the title.
               </FormDescription>
