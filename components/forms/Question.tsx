@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,13 +20,18 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "../ui/badge";
 import QuestionSchema from "@/lib/validations";
 import { createQuestion } from "@/lib/actions/question.action";
-import { create } from "domain";
 
 const type: any = "create";
 
-const Question = () => {
+interface Props {
+  mongouserId: string;
+}
+
+const Question = ({ mongouserId }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const form = useForm<z.infer<typeof QuestionSchema>>({
     resolver: zodResolver(QuestionSchema),
@@ -38,8 +44,15 @@ const Question = () => {
 
   const onSubmit = async (values: z.infer<typeof QuestionSchema>) => {
     setIsSubmitting(true);
+
     try {
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongouserId),
+      });
+      router.push("/");
     } catch (error) {
     } finally {
       setIsSubmitting(false);
