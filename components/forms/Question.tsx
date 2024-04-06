@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,9 +16,10 @@ import {
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
-import QuestionSchema from "@/lib/validations";
 import { Badge } from "../ui/badge";
-import Image from "next/image";
+import QuestionSchema from "@/lib/validations";
+import { createQuestion } from "@/lib/actions/question.action";
+import { create } from "domain";
 
 const type: any = "create";
 
@@ -34,9 +36,10 @@ const Question = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof QuestionSchema>) => {
+  const onSubmit = async (values: z.infer<typeof QuestionSchema>) => {
     setIsSubmitting(true);
     try {
+      await createQuestion({});
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -64,7 +67,6 @@ const Question = () => {
           form.setValue("tags", [...field.value, tagValue]);
           tagInput.value = "";
           form.clearErrors("tags");
-          console.log(field.value);
         }
       } else {
         form.trigger();
@@ -120,6 +122,8 @@ const Question = () => {
                     //@ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
