@@ -1,10 +1,9 @@
 import { Schema, models, model, Document } from "mongoose";
-import { Scheherazade_New } from "next/font/google";
 
 export interface IQuestion extends Document {
   title: string;
   content: string;
-  tag: Schema.Types.ObjectId[];
+  tags: Schema.Types.ObjectId[];
   views: number;
   upvotes: Schema.Types.ObjectId[];
   downvotes: Schema.Types.ObjectId[];
@@ -26,4 +25,5 @@ const QuestionSchema = new Schema({
 });
 
 const Question = models.Question || model("Question", QuestionSchema);
+
 export default Question;

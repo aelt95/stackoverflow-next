@@ -1,10 +1,30 @@
-"use client";
 import Link from "next/link";
 import RenderTags from "../RenderTags";
 import Metric from "../Metric";
 import { getTimeStamp } from "@/lib/utils";
 
+interface QuestionProps {
+  _id: string;
+  title: string;
+  tags: {
+    _id: string;
+    name: string;
+  }[];
+  author: {
+    _id: string;
+    name: string;
+    picture: string;
+    clerkId: string;
+  };
+  upvotes: string[];
+  views: number;
+  answers: Array<object>;
+  createdAt: Date;
+  clerkId?: string | null;
+}
+
 const QuestionCard = ({
+  clerkId,
   _id,
   title,
   tags,
@@ -37,7 +57,7 @@ const QuestionCard = ({
         <Metric
           imgUrl={"/assets/icons/avatar.svg"}
           alt="User"
-          value={author}
+          value={author.name}
           title={`- asked ${createdAtString}`}
           href={`/profile/${author._id}`}
           isAuthor

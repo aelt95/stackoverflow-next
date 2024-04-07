@@ -6,31 +6,11 @@ import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/home/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/shared/cards/QuestionCard";
+import { getQuestions } from "@/lib/actions/question.action";
 
-const questions = [
-  {
-    _id: 1,
-    title: "How to use npm run build?",
-    tags: [{ _id: 1, name: "npm" }],
-    author: "Mickel Rey",
-    upvotes: 10,
-    views: 1000,
-    answers: 2,
-    createdAt: new Date("2024-03-15"),
-  },
-  {
-    _id: 2,
-    title: "How install threeJs",
-    tags: [{ _id: 1, name: "three" }],
-    author: "Rose Clarie",
-    upvotes: 21,
-    views: 2321,
-    answers: 12,
-    createdAt: new Date("2024-03-16, 16:22"),
-  },
-];
+const Home = async () => {
+  const result = await getQuestions({});
 
-const Home = () => {
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between sm:flex-row">
@@ -57,9 +37,21 @@ const Home = () => {
       </div>
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((items) => {
-            return <QuestionCard key={items._id} {...items} />;
+        {result?.questions && result.questions.length > 0 ? (
+          result.questions.map((question) => {
+            return (
+              <QuestionCard
+                key={question._id}
+                _id={question._id}
+                title={question.title}
+                tags={question.tags}
+                author={question.author}
+                upvotes={question.upvotes}
+                views={question.views}
+                answers={question.answers}
+                createdAt={question.createdAt}
+              />
+            );
           })
         ) : (
           <NoResult
