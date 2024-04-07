@@ -51,6 +51,7 @@ const Question = ({ mongouserId }: Props) => {
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongouserId),
+        path: pathname,
       });
       router.push("/");
     } catch (error) {
