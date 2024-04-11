@@ -23,11 +23,11 @@ const RightSideBar = () => {
   ];
 
   const popularTags = [
-    { _id: 1, name: "React", totalQuestion: 5 },
-    { _id: 1, name: "Javascript", totalQuestion: 5 },
-    { _id: 1, name: "Next", totalQuestion: 5 },
-    { _id: 1, name: "CSS", totalQuestion: 5 },
-    { _id: 1, name: "Tailwind", totalQuestion: 5 },
+    { _id: "1", name: "React", totalQuestion: 5 },
+    { _id: "1", name: "Javascript", totalQuestion: 5 },
+    { _id: "1", name: "Next", totalQuestion: 5 },
+    { _id: "1", name: "CSS", totalQuestion: 5 },
+    { _id: "1", name: "Tailwind", totalQuestion: 5 },
   ];
 
   return (
