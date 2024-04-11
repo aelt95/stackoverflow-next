@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   // TODO: add webhook after deploy
-  const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+  const WEBHOOK_SECRET = process.env.NEXT_CLERCK_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
     throw new Error(
