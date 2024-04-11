@@ -2,6 +2,7 @@ import React from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Space_Grotesk } from "next/font/google";
 import type { Metadata } from "next";
+import Navbar from "@/components/shared/navbar/Navbar";
 
 import "./global.css";
 import "../styles/prism.css";
@@ -44,7 +45,10 @@ export default function RootLayout({
             },
           }}
         >
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <Navbar />
+            {children}
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
