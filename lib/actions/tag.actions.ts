@@ -13,7 +13,10 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 
     if (!user) throw new Error("User not found");
 
-    return ["tag1", "tag2", "tag3"];
+    return [
+      { _id: "1", name: "Test" },
+      { _id: "2", name: "Prueba" },
+    ];
   } catch (error) {
     console.log(error);
     throw error;
