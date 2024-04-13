@@ -28,8 +28,10 @@ export async function getAllTags(params: GetAllTagsParams) {
     connectToDatabase();
 
     const tags = await Tag.find({});
+
     return { tags };
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
