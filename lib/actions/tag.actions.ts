@@ -23,12 +23,12 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   }
 }
 
-export async function getAllTAgs(params: GetAllTagsParams) {
+export async function getAllTags(params: GetAllTagsParams) {
   try {
     connectToDatabase();
 
-    const tags = Tag.find({});
-    return tags;
+    const tags = await Tag.find({});
+    return { tags };
   } catch (error) {
     console.log(error);
   }
