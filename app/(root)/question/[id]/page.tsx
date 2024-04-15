@@ -5,10 +5,10 @@ import Image from "next/image";
 import Metric from "@/components/shared/Metric";
 import { getTimeStamp } from "@/lib/utils";
 import ParseHTML from "@/components/shared/ParseHTML";
+import RenderTags from "@/components/shared/RenderTags";
 
-const Page = async ({ params, searchParams }) => {
+const Page = async ({ params }: any) => {
   const questionResult = await getQuestionById({ questionId: params.id });
-  console.log(questionResult);
 
   return (
     <>
@@ -59,6 +59,11 @@ const Page = async ({ params, searchParams }) => {
         />
       </div>
       <ParseHTML data={questionResult.content} />
+      <div className="mt-8 flex flex-wrap gap-2">
+        {questionResult.tags.map((tag: any) => {
+          return <RenderTags key={tag._id} _id={tag._id} name={tag.name} />;
+        })}
+      </div>
     </>
   );
 };
