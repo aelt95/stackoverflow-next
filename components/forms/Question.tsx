@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "../ui/badge";
 import QuestionSchema from "@/lib/validations";
 import { createQuestion } from "@/lib/actions/question.action";
+import { useTheme } from "@/context/ThemeProvider";
 
 const type: any = "create";
 
@@ -28,6 +29,7 @@ interface Props {
 }
 
 const Question = ({ mongouserId }: Props) => {
+  const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -165,6 +167,8 @@ const Question = ({ mongouserId }: Props) => {
                       "alignright alignjustify | bullist numlist outdent indent | ",
                     content_style:
                       "body { font-family:Inter,Arial,sans-serif; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>

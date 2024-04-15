@@ -7,3 +7,7 @@ const formSchema = z.object({
 });
 
 export default formSchema;
+
+export const AnswerSchema = z.object({
+  answer: z.string().min(20),
+});

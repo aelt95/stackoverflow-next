@@ -6,6 +6,7 @@ import Metric from "@/components/shared/Metric";
 import { getTimeStamp } from "@/lib/utils";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTags from "@/components/shared/RenderTags";
+import Answer from "@/components/forms/Answer";
 
 const Page = async ({ params }: any) => {
   const questionResult = await getQuestionById({ questionId: params.id });
@@ -64,6 +65,7 @@ const Page = async ({ params }: any) => {
           return <RenderTags key={tag._id} _id={tag._id} name={tag.name} />;
         })}
       </div>
+      <Answer />
     </>
   );
 };
