@@ -11,6 +11,7 @@ import { auth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.actions";
 import { getAnswers } from "@/lib/actions/answer.action";
 import AllAnswers from "@/components/shared/AllAnswers";
+import Votes from "@/components/shared/Votes";
 
 const Page = async ({ params }: any) => {
   const questionResult = await getQuestionById({ questionId: params.id });
@@ -39,7 +40,9 @@ const Page = async ({ params }: any) => {
               {questionResult.author.name}
             </p>
           </Link>
-          <div className="flex justify-end">VOTING</div>
+          <div className="flex justify-end">
+            <Votes />
+          </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
           {questionResult.title}
