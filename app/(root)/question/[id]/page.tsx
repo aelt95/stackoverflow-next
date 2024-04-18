@@ -7,9 +7,18 @@ import { getTimeStamp } from "@/lib/utils";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTags from "@/components/shared/RenderTags";
 import Answer from "@/components/forms/Answer";
+import { auth } from "@clerk/nextjs";
+import { getUserById } from "@/lib/actions/user.actions";
+import { getAnswers } from "@/lib/actions/answer.action";
+import AllAnswers from "@/components/shared/AllAnswers";
 
 const Page = async ({ params }: any) => {
   const questionResult = await getQuestionById({ questionId: params.id });
+  const { userId: clerkId } = auth();
+  let mongoUser;
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
 
   return (
     <>
@@ -65,7 +74,16 @@ const Page = async ({ params }: any) => {
           return <RenderTags key={tag._id} _id={tag._id} name={tag.name} />;
         })}
       </div>
-      <Answer />
+      <AllAnswers
+        questionId={questionResult._id}
+        userId={JSON.stringify(mongoUser._id)}
+        totalAnswers={questionResult.answers.length}
+      />
+      <Answer
+        question={questionResult.content}
+        questionId={JSON.stringify(questionResult._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   );
 };
