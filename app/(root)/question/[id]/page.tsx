@@ -20,7 +20,6 @@ const Page = async ({ params }: any) => {
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
   }
-
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -45,8 +44,8 @@ const Page = async ({ params }: any) => {
               type="question"
               itemId={JSON.stringify(questionResult._id)}
               userId={JSON.stringify(mongoUser._id)}
-              upvotes={questionResult.upvotes.lenght}
-              downvotes={questionResult.downvotes.lenght}
+              upvotes={questionResult.upvotes.length}
+              downvotes={questionResult.downvotes.length}
               hasupVoted={questionResult.upvotes.includes(mongoUser._id)}
               hasdownVoted={questionResult.downvotes.includes(mongoUser._id)}
               hasSaved={mongoUser?.saved.includes(questionResult._id)}
