@@ -3,6 +3,7 @@ import {
   downVoteQuestion,
   upVoteQuestion,
 } from "@/lib/actions/question.action";
+import { upVoteAnswer } from "@/lib/actions/answer.action";
 import Image from "next/image";
 import React from "react";
 import { usePathname } from "next/navigation";
@@ -15,7 +16,7 @@ interface Props {
   downvotes: number;
   hasupVoted: boolean;
   hasdownVoted: boolean;
-  hasSaved: boolean;
+  hasSaved?: boolean;
 }
 const Votes = ({
   type,
@@ -43,13 +44,13 @@ const Votes = ({
           path: pathname,
         });
       } else if (type === "Answer") {
-        // await upVoteAnswer({
-        //   questionId: JSON.parse(itemId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted,
-        //   hasdownVoted,
-        //   path: pathname,
-        // });
+        await upVoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
       }
       return;
     }
