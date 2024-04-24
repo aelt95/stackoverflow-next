@@ -3,7 +3,7 @@ import {
   downVoteQuestion,
   upVoteQuestion,
 } from "@/lib/actions/question.action";
-import { upVoteAnswer } from "@/lib/actions/answer.action";
+import { downvVoteAnswer, upVoteAnswer } from "@/lib/actions/answer.action";
 import Image from "next/image";
 import React from "react";
 import { usePathname } from "next/navigation";
@@ -64,13 +64,13 @@ const Votes = ({
           path: pathname,
         });
       } else if (type === "Answer") {
-        // await downvoteAnswer({
-        //   questionId: JSON.parse(itemId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted,
-        //   hasdownVoted,
-        //   path: pathname,
-        // });
+        await downvVoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
       }
       return;
     }
