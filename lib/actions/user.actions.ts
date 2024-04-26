@@ -6,6 +6,7 @@ import {
   CreateUserParams,
   DeleteUserParams,
   GetAllUsersParams,
+  GetSavedQuestionsParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
@@ -98,6 +99,15 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
       );
     }
     revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getSavedQuestion(params: GetSavedQuestionsParams) {
+  try {
+    connectToDatabase();
   } catch (error) {
     console.log(error);
     throw error;
