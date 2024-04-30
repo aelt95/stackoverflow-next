@@ -15,7 +15,7 @@ const InteractionSchema = new Schema({
   questions: { type: Schema.Types.ObjectId, ref: "Question" },
   answers: { type: Schema.Types.ObjectId, ref: "Answer" },
   tags: [{ type: Schema.Types.ObjectId, ref: "Answer" }],
-  createdOn: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Interaction =
