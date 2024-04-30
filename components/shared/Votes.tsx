@@ -5,9 +5,10 @@ import {
 } from "@/lib/actions/question.action";
 import { downvVoteAnswer, upVoteAnswer } from "@/lib/actions/answer.action";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { toggleSaveQuestion } from "@/lib/actions/user.actions";
+import { viewQuestion } from "@/lib/actions/interaction.action";
 // import { useRouter } from "next/router";
 interface Props {
   type: string;
@@ -83,6 +84,12 @@ const Votes = ({
     }
   };
 
+  useEffect(() => {
+    viewQuestion({
+      questionId: JSON.parse(itemId),
+      userId: userId ? JSON.parse(userId) : undefined,
+    });
+  }, [itemId, userId, pathname]);
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
