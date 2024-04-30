@@ -1,7 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 DevOverflow app 1.0
 Auth: Clerk
-DB: MongoDB
+DB: MongoDB.
 
 ## Getting Started
 
