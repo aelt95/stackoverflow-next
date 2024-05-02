@@ -6,10 +6,9 @@ import {
 import { downvVoteAnswer, upVoteAnswer } from "@/lib/actions/answer.action";
 import Image from "next/image";
 import React, { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toggleSaveQuestion } from "@/lib/actions/user.actions";
 import { viewQuestion } from "@/lib/actions/interaction.action";
-// import { useRouter } from "next/router";
 interface Props {
   type: string;
   itemId: string;
@@ -31,7 +30,7 @@ const Votes = ({
   hasSaved,
 }: Props) => {
   const pathname = usePathname();
-  // const router = useRouter();
+  const router = useRouter();
   const handleSave = async () => {
     await toggleSaveQuestion({
       userId: JSON.parse(userId),
@@ -89,7 +88,7 @@ const Votes = ({
       questionId: JSON.parse(itemId),
       userId: userId ? JSON.parse(userId) : undefined,
     });
-  }, [itemId, userId, pathname]);
+  }, [itemId, userId, pathname, router]);
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
