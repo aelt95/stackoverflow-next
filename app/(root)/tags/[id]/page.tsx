@@ -1,8 +1,14 @@
+import { getQuestionsByTagId } from "@/lib/actions/tag.actions";
 import React from "react";
 
-const page = ({ params }: any) => {
-  console.log(params.id);
+const Page = async ({ params, searchParams }: any) => {
+  console.log(searchParams);
+  const tags = await getQuestionsByTagId({
+    tagId: params.id,
+    page: 1,
+    searchQuery: searchParams.p,
+  });
   return <div>page</div>;
 };
 
-export default page;
+export default Page;
