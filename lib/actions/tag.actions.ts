@@ -48,7 +48,8 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
     const { tagId, page = 1, pageSize = 10, searchQuery } = params;
 
     const tagFilter: FilterQuery<ITag> = { _id: tagId };
-    const tag = await Tag.findOne({ tagFilter }).populate({
+    console.log(tagFilter);
+    const tag = await Tag.findOne(tagFilter).populate({
       path: "questions",
       model: Question,
       match: searchQuery
@@ -62,6 +63,7 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
         { path: "author", model: User, select: "_id clerkId name picture" },
       ],
     });
+    console.log(tag);
     if (!tag) throw new Error("Tag not found");
     const questions = tag.questions;
     return { tagTitle: tag.name, questions: questions };

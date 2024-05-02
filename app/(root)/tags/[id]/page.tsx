@@ -1,18 +1,17 @@
 import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/shared/cards/QuestionCard";
-import Filter from "@/components/shared/search/Filter";
 import LocalSearch from "@/components/shared/search/LocalSearch";
 import { getQuestionsByTagId } from "@/lib/actions/tag.actions";
 import React from "react";
 
 const Page = async ({ params, searchParams }: any) => {
+  console.log(params.id);
   const result = await getQuestionsByTagId({
     tagId: params.id,
     page: 1,
     searchQuery: searchParams.p,
   });
 
-  console.log(result);
   return (
     <>
       <>
