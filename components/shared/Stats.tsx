@@ -1,6 +1,6 @@
 import React from "react";
 
-const Stats = () => {
+const Stats = ({ totalAnswers, totalQuestions }: any) => {
   return <div>Stats</div>;
 };
 
