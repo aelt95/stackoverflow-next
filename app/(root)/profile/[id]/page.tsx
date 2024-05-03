@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Stats from "@/components/shared/Stats";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getJoindedDate } from "@/lib/utils";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const userInfo = await getUserInfo({ userId: params.id });
@@ -46,11 +47,9 @@ const Page = async ({ params, searchParams }: URLProps) => {
                   title={userInfo.user.location}
                 />
               )}
+            */}
 
-              <ProfileLink
-                imgUrl="/assets/icons/calendar.svg"
-                title={getJoinedDate(userInfo.user.joinedAt)}
-              /> */}
+              <>Joinded {getJoindedDate(userInfo.user.joinedAt)}</>
             </div>
 
             {userInfo.user.bio && (
