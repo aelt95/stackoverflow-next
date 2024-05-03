@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { log } from "util";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -19,4 +18,12 @@ export const getTimeStamp = (createdAt: Date) => {
   if (secondsDif > 5370) {
     return "more than an hour";
   }
+};
+
+export const getJoindedDate = (date: Date) => {
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
+
+  const joindedDate = `${month} ${year}`;
+  return joindedDate;
 };
