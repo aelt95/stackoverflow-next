@@ -13,7 +13,6 @@ const AnswersTab = async ({
   clerkId,
 }: AnswerTabProps) => {
   const result = await getUserAnswers({ userId, page: 1 });
-  console.log(result.answers);
   return (
     <>
       {result.answers.map((item) => {
