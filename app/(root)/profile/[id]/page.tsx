@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Stats from "@/components/shared/Stats";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getJoindedDate } from "@/lib/utils";
+import QuestionTab from "@/components/shared/QuestionTab";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const userInfo = await getUserInfo({ userId: params.id });
