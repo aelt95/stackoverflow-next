@@ -9,6 +9,7 @@ import Stats from "@/components/shared/Stats";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getJoindedDate } from "@/lib/utils";
 import QuestionTab from "@/components/shared/QuestionTab";
+import AnswersTab from "@/components/shared/AnswersTab";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const userInfo = await getUserInfo({ userId: params.id });
@@ -97,11 +98,11 @@ const Page = async ({ params, searchParams }: URLProps) => {
             />
           </TabsContent>
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
-            {/* <AnswersTab
+            <AnswersTab
               searchParams={searchParams}
               userId={userInfo.user._id}
               clerkId={clerkId}
-            /> */}
+            />
           </TabsContent>
         </Tabs>
       </div>
