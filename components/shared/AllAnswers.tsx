@@ -57,7 +57,7 @@ const AllAnswers = async ({
                       </p>
 
                       <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1">
-                        &nbsp; -answered {getTimeStamp(answer.createAt)}
+                        &nbsp; -answered {getTimeStamp(answer.createdAt)}
                       </p>
                     </div>
                   </Link>
