@@ -22,25 +22,28 @@ import QuestionSchema from "@/lib/validations";
 import { createQuestion } from "@/lib/actions/question.action";
 import { useTheme } from "@/context/ThemeProvider";
 
-const type: any = "create";
-
 interface Props {
   mongouserId: string;
+  type?: string;
+  questionDetails?: string;
 }
 
-const Question = ({ mongouserId }: Props) => {
+const Question = ({ mongouserId, type, questionDetails }: Props) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
+  const parsedQuestionDetails = JSON.parse(questionDetails || "");
+  const groupedTags = parsedQuestionDetails.tags.map((tag: any) => tag.name);
+
   const form = useForm<z.infer<typeof QuestionSchema>>({
     resolver: zodResolver(QuestionSchema),
     defaultValues: {
-      title: "",
+      title: parsedQuestionDetails.title || "",
       explanation: "",
-      tags: [],
+      tags: groupedTags || [],
     },
   });
 
@@ -140,7 +143,7 @@ const Question = ({ mongouserId }: Props) => {
                   }}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue=""
+                  initialValue={parsedQuestionDetails.content || ""}
                   init={{
                     height: 350,
                     menubar: false,
@@ -232,9 +235,9 @@ const Question = ({ mongouserId }: Props) => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <>{type === "edit" ? "Editing" : "Posting"}</>
+            <>{type === "Edit" ? "Editing" : "Posting"}</>
           ) : (
-            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+            <>{type === "Edit" ? "Edit Question" : "Ask a Question"}</>
           )}
         </Button>
       </form>

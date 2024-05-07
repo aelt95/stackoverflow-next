@@ -4,7 +4,7 @@ import { getUserById } from "@/lib/actions/user.actions";
 import { auth } from "@clerk/nextjs";
 import React from "react";
 
-const Page = async ({ params }) => {
+const Page = async ({ params }: any) => {
   const { userId } = auth();
   if (!userId) return null;
   const mongoUser = await getUserById({ userId });
