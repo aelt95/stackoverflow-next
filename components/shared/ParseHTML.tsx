@@ -24,7 +24,6 @@ import "prismjs/components/prism-sql";
 import "prismjs/components/prism-mongodb";
 import "prismjs/plugins/line-numbers/prism-line-numbers.js";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
-import { Interface } from "readline";
 
 interface Props {
   data: string;
@@ -35,7 +34,7 @@ const ParseHTML = ({ data }: Props) => {
     Prism.highlightAll();
   }, []);
 
-  return <div>{parse(data)}</div>;
+  return <div className=" text-dark300_light700">{parse(data)}</div>;
 };
 
 export default ParseHTML;

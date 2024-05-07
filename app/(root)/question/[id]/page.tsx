@@ -9,7 +9,6 @@ import RenderTags from "@/components/shared/RenderTags";
 import Answer from "@/components/forms/Answer";
 import { auth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.actions";
-import { getAnswers } from "@/lib/actions/answer.action";
 import AllAnswers from "@/components/shared/AllAnswers";
 import Votes from "@/components/shared/Votes";
 
