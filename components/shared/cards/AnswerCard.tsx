@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { getTimeStamp } from "@/lib/utils";
 import Metric from "../Metric";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeleteActions from "../EditDeleteActions";
 
 interface Props {
   clerkId?: string | null;
@@ -28,6 +30,8 @@ const AnswerCard = ({
   upvotes,
   createdAt,
 }: Props) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId;
+
   return (
     <Link
       href={`/question/${question._id}/#${_id}`}
@@ -43,7 +47,11 @@ const AnswerCard = ({
           </h3>
         </div>
       </div>
-
+      <SignedIn>
+        {showActionButtons && (
+          <EditDeleteActions type="Answer" itemId={JSON.stringify(_id)} />
+        )}
+      </SignedIn>
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
           imgUrl={author.picture}
