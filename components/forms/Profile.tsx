@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,6 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "../ui/textarea";
+import { profileSchema } from "@/lib/validations";
 
 interface Props {
   clerkId: string;
@@ -21,34 +23,43 @@ interface Props {
 }
 const Profile = ({ clerkId, user }: Props) => {
   const parsedUser = JSON.parse(user);
+  const [isSubmittin, setIsSubmittin] = useState(false);
 
-  const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-  });
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof profileSchema>>({
+    resolver: zodResolver(profileSchema),
     defaultValues: {
-      username: "",
+      name: parsedUser.name || "",
+      username: parsedUser.username || "",
+      portfolioWebsite: parsedUser.portfolioWebsite || "",
+      bio: parsedUser.bio || "",
+      location: parsedUser.location || "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof profileSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mt-9 flex flex-col w-full"
+      >
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
+            <FormItem className="space-y-3.5">
+              <FormLabel>
+                Name <span className="text-primary-500">*</span>
+              </FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+                  placeholder="Your name "
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -57,7 +68,89 @@ const Profile = ({ clerkId, user }: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem className="space-y-3.5">
+              <FormLabel>
+                Username <span className="text-primary-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+                  placeholder="Your username "
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="portfolioWebsite"
+          render={({ field }) => (
+            <FormItem className="space-y-3.5">
+              <FormLabel>Portfolio Link</FormLabel>
+              <FormControl>
+                <Input
+                  type="url"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+                  placeholder="Your username "
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem className="space-y-3.5">
+              <FormLabel>Portfolio Link</FormLabel>
+              <FormControl>
+                <Input
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+                  placeholder="Where are you from?"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="bio"
+          render={({ field }) => (
+            <FormItem className="space-y-3.5">
+              <FormLabel>What's special about you</FormLabel>
+              <FormControl>
+                <Textarea
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+                  placeholder="Where are you from?"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="mt-7 flex justify-end">
+          <Button
+            type="submit"
+            className="primary-gradient w-fit"
+            disabled={isSubmittin}
+          >
+            {isSubmittin ? "Saving" : "Save"}
+          </Button>
+        </div>
       </form>
     </Form>
   );
