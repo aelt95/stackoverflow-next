@@ -145,7 +145,7 @@ const Profile = ({ clerkId, user }: Props) => {
           name="bio"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>What's special about you</FormLabel>
+              <FormLabel>What&apos;s special about you</FormLabel>
               <FormControl>
                 <Textarea
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
