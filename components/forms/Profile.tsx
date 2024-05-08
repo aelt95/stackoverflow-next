@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import { profileSchema } from "@/lib/validations";
+import { usePathname, useRouter } from "next/navigation";
+import { updateUser } from "@/lib/actions/user.actions";
 
 interface Props {
   clerkId: string;
@@ -23,6 +25,8 @@ interface Props {
 }
 const Profile = ({ clerkId, user }: Props) => {
   const parsedUser = JSON.parse(user);
+  const router = useRouter();
+  const pathname = usePathname();
   const [isSubmittin, setIsSubmittin] = useState(false);
 
   const form = useForm<z.infer<typeof profileSchema>>({
@@ -35,10 +39,27 @@ const Profile = ({ clerkId, user }: Props) => {
       location: parsedUser.location || "",
     },
   });
-  function onSubmit(values: z.infer<typeof profileSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof profileSchema>) {
+    setIsSubmittin(true);
+    try {
+      await updateUser({
+        clerkId,
+        updateData: {
+          name: values.name,
+          username: values.username,
+          portfolioWebsite: values.portfolioWebsite,
+          location: values.location,
+          bio: values.bio,
+        },
+        path: pathname,
+      });
+
+      router.back();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmittin(false);
+    }
   }
   return (
     <Form {...form}>
@@ -61,9 +82,6 @@ const Profile = ({ clerkId, user }: Props) => {
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -83,9 +101,6 @@ const Profile = ({ clerkId, user }: Props) => {
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -100,7 +115,7 @@ const Profile = ({ clerkId, user }: Props) => {
                 <Input
                   type="url"
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
-                  placeholder="Your username "
+                  placeholder="Your website"
                   {...field}
                 />
               </FormControl>
@@ -113,7 +128,7 @@ const Profile = ({ clerkId, user }: Props) => {
           name="location"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>Portfolio Link</FormLabel>
+              <FormLabel>Location</FormLabel>
               <FormControl>
                 <Input
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"

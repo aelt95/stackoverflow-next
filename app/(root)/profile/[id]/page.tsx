@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getJoindedDate } from "@/lib/utils";
 import QuestionTab from "@/components/shared/QuestionTab";
 import AnswersTab from "@/components/shared/AnswersTab";
+import ProfileLink from "@/components/shared/ProfileLink";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const userInfo = await getUserInfo({ userId: params.id });
@@ -35,7 +36,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
             </p>
 
             <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
-              {/* {userInfo.user.portfolioWebsite && (
+              {userInfo.user.portfolioWebsite && (
                 <ProfileLink
                   imgUrl="/assets/icons/link.svg"
                   href={userInfo.user.portfolioWebsite}
@@ -49,11 +50,12 @@ const Page = async ({ params, searchParams }: URLProps) => {
                   title={userInfo.user.location}
                 />
               )}
-            */}
 
-              <>Joinded {getJoindedDate(userInfo.user.joinedAt)}</>
+              <ProfileLink
+                imgUrl="/assets/icons/calendar.svg"
+                title={getJoindedDate(userInfo.user.joinedAt)}
+              />
             </div>
-
             {userInfo.user.bio && (
               <p className="paragraph-regular text-dark400_light800 mt-8">
                 {userInfo.user.bio}
