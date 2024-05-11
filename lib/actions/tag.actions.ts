@@ -77,7 +77,7 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
 export async function getPopularTags() {
   try {
     connectToDatabase();
-    const popularTags = await Tag.find({}).sort({ questions: -1 });
+    const popularTags = await Tag.find({}).sort({ questions: -1 }).limit(5);
     return popularTags;
   } catch (error) {
     console.log(error);

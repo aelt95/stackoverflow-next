@@ -44,7 +44,7 @@ const RightSideBar = async () => {
                 key={tag._id}
                 _id={tag._id}
                 name={tag.name}
-                totalQuestion={tag.totalQuestion}
+                totalQuestion={tag.questions.length}
                 showCount
               />
             );
