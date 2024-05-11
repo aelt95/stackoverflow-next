@@ -9,6 +9,7 @@ import {
   GetQuestionByIdParams,
   QuestionVoteParams,
   DeleteQuestionParams,
+  EditQuestionParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Answer from "@/database/answer.model";
