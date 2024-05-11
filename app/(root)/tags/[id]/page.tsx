@@ -8,7 +8,7 @@ const Page = async ({ params, searchParams }: any) => {
   const result = await getQuestionsByTagId({
     tagId: params.id,
     page: 1,
-    searchQuery: searchParams.p,
+    searchQuery: searchParams.q,
   });
 
   return (
@@ -18,7 +18,7 @@ const Page = async ({ params, searchParams }: any) => {
       </>
       <div className="mt-11 w-full">
         <LocalSearch
-          route="/"
+          route={`/tags/${params.id}`}
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for questions"
