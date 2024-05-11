@@ -10,6 +10,7 @@ import Tag, { ITag } from "@/database/tag.model";
 import User from "@/database/user.model";
 import Question from "@/database/question.model";
 import { FilterQuery } from "mongoose";
+import { Tags } from "lucide-react";
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
@@ -67,6 +68,17 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
     if (!tag) throw new Error("Tag not found");
     const questions = tag.questions;
     return { tagTitle: tag.name, questions: questions };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getPopularTags() {
+  try {
+    connectToDatabase();
+    const popularTags = await Tag.find({}).sort({ questions: -1 });
+    return popularTags;
   } catch (error) {
     console.log(error);
     throw error;
