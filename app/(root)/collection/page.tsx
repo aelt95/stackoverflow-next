@@ -6,11 +6,15 @@ import Filter from "@/components/shared/search/Filter";
 import { QuestionFilters } from "@/constants/filters";
 import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/shared/cards/QuestionCard";
+import { SearchParamsProps } from "@/types";
 
-const page = async () => {
+const page = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();
   if (!userId) return null;
-  const result = await getSavedQuestion({ clerkId: userId });
+  const result = await getSavedQuestion({
+    clerkId: userId,
+    searchQuery: searchParams.q,
+  });
   return (
     <>
       <>
