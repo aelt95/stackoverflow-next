@@ -13,7 +13,6 @@ const RightSideBar = async () => {
         <h3 className="h3-bold text-dark200_light900">Top Questions</h3>
         <div className="mt-7 flex w-full flex-col gap-[30px]">
           {hotQuestions.map((question) => {
-            console.log(question);
             return (
               <Link
                 key={question._id}
