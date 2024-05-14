@@ -146,19 +146,19 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
     let filterOptions = {};
     switch (filter) {
       case "most_recent":
-        filterOptions = { joinedAt: -1 };
+        filterOptions = { createdAt: -1 };
         break;
       case "oldest":
-        filterOptions = { joinedAt: 1 };
+        filterOptions = { createdAt: 1 };
         break;
       case "most_voted":
-        filterOptions = { reputation: -1 };
+        filterOptions = { upvotes: -1 };
         break;
       case "most_viewed":
-        filterOptions = { reputation: -1 };
+        filterOptions = { views: -1 };
         break;
       case "most_answered":
-        filterOptions = { reputation: -1 };
+        filterOptions = { answers: -1 };
         break;
       default:
         break;
@@ -168,7 +168,7 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
       path: "saved",
       match: query,
       options: {
-        sort: { createdAt: -1 },
+        sort: filterOptions,
       },
       populate: [
         { path: "tags", model: Tag, select: "_id name" },

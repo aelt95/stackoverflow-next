@@ -22,7 +22,6 @@ interface Props {
 
 const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
   const router = useRouter();
-  const [active, setActive] = useState("");
   const searchParams = useSearchParams();
 
   const paramFilter = searchParams.get("filter");
