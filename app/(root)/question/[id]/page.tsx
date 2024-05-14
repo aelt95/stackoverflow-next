@@ -12,9 +12,10 @@ import { getUserById } from "@/lib/actions/user.actions";
 import AllAnswers from "@/components/shared/AllAnswers";
 import Votes from "@/components/shared/Votes";
 
-const Page = async ({ params }: any) => {
+const Page = async ({ params, searchParams }: any) => {
   const questionResult = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();
+  console.log(searchParams.filter);
   let mongoUser;
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
@@ -85,6 +86,8 @@ const Page = async ({ params }: any) => {
         })}
       </div>
       <AllAnswers
+        page={searchParams?.page}
+        filter={searchParams?.filter}
         questionId={questionResult._id}
         userId={mongoUser._id}
         totalAnswers={questionResult.answers.length}
