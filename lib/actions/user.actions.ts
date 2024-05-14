@@ -85,6 +85,7 @@ export async function getAllUser(params: GetAllUsersParams) {
         { username: { $regex: new RegExp(searchQuery, "i") } },
       ];
     }
+    let filterOptions = {};
 
     const users = await User.find(query).sort({ createdAt: -1 });
     return { users };

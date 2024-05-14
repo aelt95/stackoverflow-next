@@ -1,8 +1,8 @@
 "use client";
 import { HomePageFilters } from "@/constants/filters";
 import { Button } from "../ui/button";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { formUrlQuery } from "@/lib/utils";
 
 const HomeFilters = () => {
@@ -29,8 +29,6 @@ const HomeFilters = () => {
       router.push(newUrl, { scroll: false });
     }
   };
-  useEffect(() => {}, []);
-
   return (
     <div className="mt-10 flex-wrap gap-3 md:flex hidden">
       {HomePageFilters.map((item) => {
