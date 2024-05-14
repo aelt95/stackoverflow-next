@@ -8,11 +8,13 @@ import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/shared/cards/QuestionCard";
 import { getQuestions } from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
+import Pagination from "@/components/shared/Pagination";
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
   const result = await getQuestions({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page,
   });
 
   return (
@@ -68,6 +70,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
           />
         )}
       </div>
+      <Pagination />
     </>
   );
 };

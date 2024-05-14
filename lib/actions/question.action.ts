@@ -52,7 +52,7 @@ export async function createQuestion(params: CreateQuestionParams) {
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page } = params;
     const query: FilterQuery<typeof Question> = {};
 
     if (searchQuery) {
