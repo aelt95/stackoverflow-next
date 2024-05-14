@@ -77,6 +77,8 @@ export async function getAllUser(params: GetAllUsersParams) {
 
     const query: FilterQuery<typeof User> = {};
 
+    const amountToSkip = (page - 1) * pageSize;
+
     if (searchQuery) {
       query.$or = [
         {
@@ -100,8 +102,13 @@ export async function getAllUser(params: GetAllUsersParams) {
         break;
     }
 
-    const users = await User.find(query).sort(filterOptions);
-    return { users };
+    const users = await User.find(query)
+      .skip(amountToSkip)
+      .limit(pageSize)
+      .sort(filterOptions);
+    const totalUsers = await User.countDocuments(query);
+    const isNext = totalUsers > amountToSkip + users.length;
+    return { users, isNext };
   } catch (error) {
     console.log(error);
     throw error;
