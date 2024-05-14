@@ -8,34 +8,42 @@ const Props = {
   pageNumber: 1,
   isNext: false,
 };
+interface Props {
+  pageNumber: number;
+  isNext: boolean | undefined;
+}
 
-const Pagination = () => {
+const Pagination = ({ pageNumber, isNext }: Props) => {
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const handleNavigation = (direction: string) => {
+    const nextPageNumber =
+      direction === "prev" ? pageNumber - 1 : pageNumber + 1;
+
     const newUrl = formUrlQuery({
       params: searchParams.toString(),
       key: "page",
-      value: "2",
+      value: nextPageNumber.toString(),
     });
-    router.push(newUrl, { scroll: false });
+    router.push(newUrl);
   };
   return (
     <div className="flex items-center justify-center w-full gap-2">
       <Button
-        disabled={Props.pageNumber === 1}
+        disabled={pageNumber === 1}
         className="light-border-2 border btn flex min-h-[36px] items-center gap-2 "
         onClick={() => handleNavigation("prev")}
       >
         <p className="body-medium text-dark200_light800">Prev</p>
       </Button>
       <div className="bg-primary-500 flex justify-center items-center px-3.5 py-2  rounded-md">
-        <p className="body-semibold text-light-900">{Props.pageNumber}</p>
+        <p className="body-semibold text-light-900">{pageNumber}</p>
       </div>
       <Button
-        disabled={false}
+        disabled={!isNext}
         className="light-border-2 border btn flex min-h-[36px] items-center gap-2 "
-        onClick={() => handleNavigation("prev")}
+        onClick={() => handleNavigation("next")}
       >
         <p className="body-medium text-dark200_light800">Next</p>
       </Button>

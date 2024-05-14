@@ -27,8 +27,6 @@ const LocalSearch = ({
   const query = searchParams.get("q");
   const [search, setSearch] = useState(query || "");
 
-  console.log(searchParams);
-
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (search) {
