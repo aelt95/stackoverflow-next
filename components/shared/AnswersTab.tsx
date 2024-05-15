@@ -31,7 +31,7 @@ const AnswersTab = async ({
       })}
       <Pagination
         pageNumber={searchParams.page ? +searchParams.page : 1}
-        isNext={result?.isNext}
+        isNext={result?.isNextAnswers}
       />
     </>
   );

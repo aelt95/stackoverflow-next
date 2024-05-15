@@ -32,7 +32,8 @@ export async function createAnswer(params: CreateAnswerParams) {
 export async function getAnswers(params: GetAnswersParams) {
   try {
     connectToDatabase();
-    const { questionId, page, sortBy } = params;
+    const { questionId, page = 1, pageSize = 10, sortBy } = params;
+    const amountToSkip = (page - 1) * pageSize;
     let sortOptions = {};
     switch (sortBy) {
       case "lowestUpvotes":
@@ -54,8 +55,12 @@ export async function getAnswers(params: GetAnswersParams) {
       question: questionId,
     })
       .populate("author", "_id clerkId name picture")
+      .skip(amountToSkip)
+      .limit(pageSize)
       .sort(sortOptions);
-    return { result };
+    const totalAnswers = await Answer.countDocuments({ question: questionId });
+    const isNext = totalAnswers > amountToSkip + result.length;
+    return { result, isNext };
   } catch (error) {
     console.log(error);
     throw error;

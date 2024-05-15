@@ -222,17 +222,17 @@ export async function getUserQuestions(params: GetUserStatsParams) {
     const totalQuestions = await Question.countDocuments({ author: userId });
     const amountToSkip = (page - 1) * pageSize;
     const userQuestions = await Question.find({ author: userId })
-      .skip(amountToSkip)
-      .limit(pageSize)
       .sort({
         views: -1,
         upvotes: -1,
       })
+      .skip(amountToSkip)
+      .limit(pageSize)
       .populate("tags", "id name")
       .populate("author", "_id clerkId name picture");
 
-    const isNext = totalQuestions > amountToSkip + userQuestions.length;
-    return { totalQuestions, questions: userQuestions, isNext };
+    const isNextQuestion = totalQuestions > amountToSkip + userQuestions.length;
+    return { totalQuestions, questions: userQuestions, isNextQuestion };
   } catch (error) {
     console.log(error);
     throw error;
@@ -242,19 +242,18 @@ export async function getUserQuestions(params: GetUserStatsParams) {
 export async function getUserAnswers(params: GetUserStatsParams) {
   try {
     connectToDatabase();
-    const { userId, page = 1, pageSize = 2 } = params;
+    const { userId, page = 1, pageSize = 10 } = params;
     const totalAnswers = await Answer.countDocuments({ author: userId });
     const amountToSkip = (page - 1) * pageSize;
     const userAnswers = await Answer.find({ author: userId })
+      .sort({ upvotes: -1 })
       .skip(amountToSkip)
       .limit(pageSize)
-      .sort({ upvotes: -1 })
       .populate("question", "_id title")
       .populate("author", "_id clerkId name picture");
 
-    const isNext = totalAnswers > amountToSkip + userAnswers.length;
-    console.log(userAnswers);
-    return { totalAnswers, answers: userAnswers, isNext };
+    const isNextAnswers = totalAnswers > amountToSkip + userAnswers.length;
+    return { totalAnswers, answers: userAnswers, isNextAnswers };
   } catch (error) {
     console.log(error);
     throw error;
