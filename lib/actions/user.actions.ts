@@ -145,12 +145,13 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 export async function getSavedQuestion(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
-    const { clerkId, page = 1, pageSize = 10, filter, searchQuery } = params;
+    const { clerkId, page = 1, pageSize = 2, filter, searchQuery } = params;
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
       : {};
 
     let filterOptions = {};
+    const amountToSkip = (page - 1) * pageSize;
     switch (filter) {
       case "most_recent":
         filterOptions = { createdAt: -1 };
@@ -175,6 +176,8 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
       path: "saved",
       match: query,
       options: {
+        skip: amountToSkip,
+        limit: pageSize,
         sort: filterOptions,
       },
       populate: [
@@ -183,8 +186,10 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
       ],
     });
     if (!user) throw new Error("User not found");
+    const isNext = user.saved.length > pageSize;
+    console.log(user.saved.length, pageSize, isNext);
     const savedQuestions = user.saved;
-    return { questions: savedQuestions };
+    return { questions: savedQuestions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
