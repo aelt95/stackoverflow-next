@@ -13,7 +13,6 @@ export async function globalSearch(params: SearchParams) {
     connectToDatabase();
     const { query, type } = params;
     const regexQuery = { $regex: query, $options: "i" };
-    console.log(regexQuery, query, type?.toLowerCase());
     let results = [];
     const typeLower = type?.toLowerCase();
 
@@ -37,7 +36,7 @@ export async function globalSearch(params: SearchParams) {
             type,
             id:
               type === "user"
-                ? item.clerkid
+                ? item.clerkId
                 : type === "answer"
                 ? item.question
                 : item._id,
@@ -61,7 +60,7 @@ export async function globalSearch(params: SearchParams) {
         type,
         id:
           type === "user"
-            ? item.clerId
+            ? item.clerkId
             : type === "answer"
             ? item.question
             : item._id,

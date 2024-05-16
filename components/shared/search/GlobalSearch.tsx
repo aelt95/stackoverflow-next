@@ -15,15 +15,17 @@ const GlobalSearch = () => {
   const query = searchParams.get("global");
   const [search, setSearch] = useState(query || "");
   const [isOpen, setIsOpen] = useState(false);
-  console.log(searchContainerRef.current, searchContainerRef);
+
+  const closeTabFromResults = (prop: boolean) => {
+    return setIsOpen(prop);
+  };
 
   useEffect(() => {
     const handleOutsideClick = (event: any) => {
       if (
-        event.target !== searchContainerRef.current
-        // searchContainerRef.current &&
-        // //@ts-ignore
-        // !searchContainerRef.current.contains(event.target)
+        searchContainerRef.current &&
+        //@ts-ignore
+        !searchContainerRef.current.contains(event.target)
       ) {
         setIsOpen(false);
         setSearch("");
@@ -83,7 +85,7 @@ const GlobalSearch = () => {
           className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none text-dark400_light700"
         />
       </div>
-      {isOpen && <GlobalResult />}
+      {isOpen && <GlobalResult setIsOpen={closeTabFromResults} />}
     </div>
   );
 };

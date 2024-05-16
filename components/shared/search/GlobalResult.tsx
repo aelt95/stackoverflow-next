@@ -7,7 +7,7 @@ import Image from "next/image";
 import GlobalFilters from "./GlobalFilters";
 import { globalSearch } from "@/lib/actions/global.actions";
 
-const GlobalResult = () => {
+const GlobalResult = ({ setIsOpen }: any) => {
   const searchParams = useSearchParams();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +15,13 @@ const GlobalResult = () => {
 
   const globalParam = searchParams.get("global");
   const typeParam = searchParams.get("type");
+
+  const handleCloseTab = () => {
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 300);
+    return;
+  };
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -80,6 +87,7 @@ const GlobalResult = () => {
                     href={renderLink(item.type, item.id)}
                     key={item.type + item.id + index}
                     className="flex  w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 dark:hover:bg-dark-500/50"
+                    onClick={handleCloseTab}
                   >
                     <Image
                       src={"/assets/icons/tag.svg"}
