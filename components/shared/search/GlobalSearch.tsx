@@ -16,10 +16,6 @@ const GlobalSearch = () => {
   const [search, setSearch] = useState(query || "");
   const [isOpen, setIsOpen] = useState(false);
 
-  const closeTabFromResults = (prop: boolean) => {
-    return setIsOpen(prop);
-  };
-
   useEffect(() => {
     const handleOutsideClick = (event: any) => {
       if (
@@ -31,12 +27,12 @@ const GlobalSearch = () => {
         setSearch("");
       }
     };
-
+    setIsOpen(false);
     document.addEventListener("click", handleOutsideClick);
 
     //Because of the useEffect:
     return () => document.removeEventListener("click", handleOutsideClick);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -85,7 +81,7 @@ const GlobalSearch = () => {
           className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none text-dark400_light700"
         />
       </div>
-      {isOpen && <GlobalResult setIsOpen={closeTabFromResults} />}
+      {isOpen && <GlobalResult />}
     </div>
   );
 };
