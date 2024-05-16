@@ -5,28 +5,13 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import GlobalFilters from "./GlobalFilters";
+import { globalSearch } from "@/lib/actions/global.actions";
 
 const GlobalResult = () => {
   const searchParams = useSearchParams();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState([
-    {
-      type: "question",
-      id: 1,
-      title: "NextJs",
-    },
-    {
-      type: "tag",
-      id: 2,
-      title: "Html Js",
-    },
-    {
-      type: "answer",
-      id: 3,
-      title: "react js",
-    },
-  ]);
+  const [result, setResult] = useState([]);
 
   const globalParam = searchParams.get("global");
   const typeParam = searchParams.get("type");
@@ -36,7 +21,11 @@ const GlobalResult = () => {
       setResult([]);
       setIsLoading(true);
       try {
-        //Call everything
+        const results = await globalSearch({
+          query: globalParam,
+          type: typeParam,
+        });
+        setResult(JSON.parse(results));
       } catch (error) {
         console.log(error);
         throw error;
@@ -44,10 +33,27 @@ const GlobalResult = () => {
         setIsLoading(false);
       }
     };
+    if (globalParam) {
+      fetchResults();
+    }
   }, [globalParam, typeParam]);
 
   const renderLink = (type: string, id: string) => {
-    return "/";
+    switch (type) {
+      case "question":
+        return `/question/${id}`;
+
+      case "answer":
+        return `/question/${id}`;
+
+      case "user":
+        return `/profile/${id}`;
+
+      case "tag":
+        return `/tags/${id}`;
+      default:
+        return "/";
+    }
   };
 
   return (
@@ -71,7 +77,7 @@ const GlobalResult = () => {
               result.map((item: any, index) => {
                 return (
                   <Link
-                    href={renderLink("type", "type")}
+                    href={renderLink(item.type, item.id)}
                     key={item.type + item.id + index}
                     className="flex  w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 dark:hover:bg-dark-500/50"
                   >
@@ -96,7 +102,7 @@ const GlobalResult = () => {
             ) : (
               <div className="flex-center flex-col px-5">
                 <p className="text-dark200_light800 body-regular py-5 px-2.5">
-                  Oops, no results found
+                  Oops, no results found 😥
                 </p>
               </div>
             )}

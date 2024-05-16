@@ -9,8 +9,7 @@ const GlobalFilters = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const typeParams = searchParams.get("type");
-  const globalParams = searchParams.get("global");
-  const [active, setActive] = useState(globalParams || "");
+  const [active, setActive] = useState(typeParams || "");
 
   const handleTypeClick = (type: string) => {
     if (active !== type) {
