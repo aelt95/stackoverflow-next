@@ -223,6 +223,7 @@ export async function getUserQuestions(params: GetUserStatsParams) {
     const amountToSkip = (page - 1) * pageSize;
     const userQuestions = await Question.find({ author: userId })
       .sort({
+        createdAt: -1,
         views: -1,
         upvotes: -1,
       })

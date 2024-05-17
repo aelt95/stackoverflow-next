@@ -149,6 +149,16 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
 
     if (!question) throw new Error("Question not found");
 
+    //Increment reputation + 1
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -1 : 1 },
+    });
+    //Increment reputation for receiving votes
+
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 },
+    });
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -178,6 +188,15 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
     });
 
     if (!question) throw new Error("Question not found");
+    //Increment reputation + 1
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasdownVoted ? -1 : 1 },
+    });
+    //Increment reputation for receiving votes
+
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 },
+    });
 
     revalidatePath(path);
   } catch (error) {
