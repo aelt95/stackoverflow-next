@@ -156,7 +156,7 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
     //Increment reputation for receiving votes
 
     await User.findByIdAndUpdate(question.author, {
-      $inc: { reputation: hasupVoted ? -10 : 10 },
+      $inc: { reputation: hasupVoted ? -5 : 5 },
     });
 
     revalidatePath(path);
@@ -195,7 +195,7 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
     //Increment reputation for receiving votes
 
     await User.findByIdAndUpdate(question.author, {
-      $inc: { reputation: hasdownVoted ? -10 : 10 },
+      $inc: { reputation: hasdownVoted ? -5 : 5 },
     });
 
     revalidatePath(path);
