@@ -71,14 +71,12 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         }
       );
       const aiAnswer = await response.json();
-      const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
+      const formattedAnswer = aiAnswer.aiReply.replace(/\n/g, "<br />");
 
       if (editorRef.current) {
         const editor = editorRef.current as any;
         editor.setContent(formattedAnswer);
       }
-
-      alert(aiAnswer.reply);
     } catch (error) {
       console.log(error);
       throw error;
