@@ -64,7 +64,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     setIsSubmittingAI(true);
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgtp`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/groq`,
         {
           method: "POST",
           body: JSON.stringify({ question }),

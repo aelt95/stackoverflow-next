@@ -12,7 +12,7 @@ export default authMiddleware({
     "/community",
     "/jobs",
   ],
-  ignoredRoutes: ["/api/webhook", "/api/chatgtp"],
+  ignoredRoutes: ["/api/webhook", "/api/groq"],
 });
 
 export const config = {
