@@ -8,6 +8,7 @@ import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/shared/cards/QuestionCard";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
+import Loading from "./loading";
 
 const page = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();
