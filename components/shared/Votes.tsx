@@ -9,6 +9,7 @@ import React, { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { toggleSaveQuestion } from "@/lib/actions/user.actions";
 import { viewQuestion } from "@/lib/actions/interaction.action";
+import { toast } from "../ui/use-toast";
 interface Props {
   type: string;
   itemId: string;
@@ -37,10 +38,21 @@ const Votes = ({
       questionId: JSON.parse(itemId),
       path: pathname,
     });
+    return toast({
+      title: `Question ${
+        !hasSaved ? "saved in" : "removed from"
+      } your collection `,
+      variant: !hasSaved ? "default" : "destructive",
+    });
   };
 
   const handleVote = async (action: string) => {
-    if (!userId) return;
+    if (!userId) {
+      return toast({
+        title: "Please log in",
+        description: "You must be logged in to perform an action",
+      });
+    }
     if (action === "upvote") {
       if (type === "Question") {
         await upVoteQuestion({
@@ -59,7 +71,10 @@ const Votes = ({
           path: pathname,
         });
       }
-      return;
+      return toast({
+        title: `Upvote ${!hasupVoted ? "successful" : "removed"}`,
+        variant: !hasupVoted ? "default" : "destructive",
+      });
     }
     if (action === "downvote") {
       if (type === "Question") {
@@ -79,7 +94,10 @@ const Votes = ({
           path: pathname,
         });
       }
-      return;
+      return toast({
+        title: `Downvote ${!hasdownVoted ? "successful" : "removed"}`,
+        variant: !hasdownVoted ? "default" : "destructive",
+      });
     }
   };
 
