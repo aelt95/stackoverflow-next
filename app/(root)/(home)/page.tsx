@@ -66,6 +66,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
       <div className="mt-10 flex w-full flex-col gap-6">
         {result?.questions && result.questions.length > 0 ? (
           result.questions.map((question) => {
+            console.log(question.author);
             return (
               <QuestionCard
                 key={question._id}

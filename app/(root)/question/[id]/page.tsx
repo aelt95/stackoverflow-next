@@ -13,12 +13,12 @@ import AllAnswers from "@/components/shared/AllAnswers";
 import Votes from "@/components/shared/Votes";
 
 const Page = async ({ params, searchParams }: any) => {
-  const questionResult = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();
   let mongoUser;
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
   }
+  const questionResult = await getQuestionById({ questionId: params.id });
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -42,11 +42,11 @@ const Page = async ({ params, searchParams }: any) => {
             <Votes
               type="Question"
               itemId={JSON.stringify(questionResult._id)}
-              userId={JSON.stringify(mongoUser._id)}
+              userId={JSON.stringify(mongoUser?._id)}
               upvotes={questionResult.upvotes.length}
               downvotes={questionResult.downvotes.length}
-              hasupVoted={questionResult.upvotes.includes(mongoUser._id)}
-              hasdownVoted={questionResult.downvotes.includes(mongoUser._id)}
+              hasupVoted={questionResult.upvotes.includes(mongoUser?._id)}
+              hasdownVoted={questionResult.downvotes.includes(mongoUser?._id)}
               hasSaved={mongoUser?.saved.includes(questionResult._id)}
             />
           </div>
@@ -88,13 +88,13 @@ const Page = async ({ params, searchParams }: any) => {
         page={searchParams?.page}
         filter={searchParams?.filter}
         questionId={questionResult._id}
-        userId={mongoUser._id}
+        userId={mongoUser?._id}
         totalAnswers={questionResult.answers.length}
       />
       <Answer
         question={questionResult.content}
         questionId={JSON.stringify(questionResult._id)}
-        authorId={JSON.stringify(mongoUser._id)}
+        authorId={JSON.stringify(mongoUser?._id)}
       />
     </>
   );

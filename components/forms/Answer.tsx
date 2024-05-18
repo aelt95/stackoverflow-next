@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   question: string;
@@ -38,6 +39,12 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   });
 
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
+    if (!authorId) {
+      return toast({
+        title: "Please log in",
+        description: "You must be logged in to perfom an action",
+      });
+    }
     setIsSubmitting(true);
 
     try {
@@ -60,7 +67,12 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     }
   };
   const generateAIAnswerHandler = async () => {
-    if (!authorId) return;
+    if (!authorId) {
+      return toast({
+        title: "Please log in",
+        description: "You must be logged in to perfom an action",
+      });
+    }
     setIsSubmittingAI(true);
     try {
       const response = await fetch(
